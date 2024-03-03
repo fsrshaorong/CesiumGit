@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class CameraMovements : MonoBehaviour, IMouseBaseEvent
 {
-    //public Transform target;//»ñÈ¡Ğı×ªÄ¿±ê
+    //public Transform target;//è·å–æ—‹è½¬ç›®æ ‡
     public Transform Camera;
     public float rotateSpeed = 5f;
     public float translateSpeed = 700f;
@@ -38,7 +38,8 @@ public class CameraMovements : MonoBehaviour, IMouseBaseEvent
     // Update is called once per frame
     void Update()
     {
-        isBigScreen = FindObjectOfType<ScreenSwitch>().withCharts;
+        //isBigScreen = FindObjectOfType<ScreenSwitch>().withCharts;
+        isBigScreen = true;
         //camerarotate();
         //camerazoom();
         if (Input.GetKeyDown(KeyCode.R))
@@ -72,11 +73,11 @@ public class CameraMovements : MonoBehaviour, IMouseBaseEvent
         //camerarotate();
     }
 
-    private void cameratranslate() //ÉãÏñ»úÎ§ÈÆÄ¿±êĞı×ª²Ù×÷
+    private void cameratranslate() //æ‘„åƒæœºå›´ç»•ç›®æ ‡æ—‹è½¬æ“ä½œ
     {
-        //transform.RotateAround(target.position, Vector3.up, speed * Time.deltaTime); //ÉãÏñ»úÎ§ÈÆÄ¿±êĞı×ª
-        var mouse_x = Input.GetAxis("Mouse X");//»ñÈ¡Êó±êXÖáÒÆ¶¯
-        var mouse_y = -Input.GetAxis("Mouse Y");//»ñÈ¡Êó±êYÖáÒÆ¶¯
+        //transform.RotateAround(target.position, Vector3.up, speed * Time.deltaTime); //æ‘„åƒæœºå›´ç»•ç›®æ ‡æ—‹è½¬
+        var mouse_x = Input.GetAxis("Mouse X");//è·å–é¼ æ ‡Xè½´ç§»åŠ¨
+        var mouse_y = -Input.GetAxis("Mouse Y");//è·å–é¼ æ ‡Yè½´ç§»åŠ¨
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
@@ -86,18 +87,18 @@ public class CameraMovements : MonoBehaviour, IMouseBaseEvent
 
     }
 
-    private void camerarotate() //ÉãÏñ»úÎ§ÈÆÄ¿±êĞı×ª²Ù×÷
+    private void camerarotate() //æ‘„åƒæœºå›´ç»•ç›®æ ‡æ—‹è½¬æ“ä½œ
     {
-        //transform.RotateAround(target.position, Vector3.up, speed * Time.deltaTime); //ÉãÏñ»úÎ§ÈÆÄ¿±êĞı×ª
-        var mouse_x = Input.GetAxis("Mouse X");//»ñÈ¡Êó±êXÖáÒÆ¶¯
-        var mouse_y = -Input.GetAxis("Mouse Y");//»ñÈ¡Êó±êYÖáÒÆ¶¯
+        //transform.RotateAround(target.position, Vector3.up, speed * Time.deltaTime); //æ‘„åƒæœºå›´ç»•ç›®æ ‡æ—‹è½¬
+        var mouse_x = Input.GetAxis("Mouse X");//è·å–é¼ æ ‡Xè½´ç§»åŠ¨
+        var mouse_y = -Input.GetAxis("Mouse Y");//è·å–é¼ æ ‡Yè½´ç§»åŠ¨
 
         Camera.RotateAround(center, Vector3.up, mouse_x * rotateSpeed);
         //Camera.RotateAround(center, transform.right, mouse_y * rotateSpeed);
 
     }
 
-    private void camerazoom() //ÉãÏñ»ú¹öÂÖËõ·Å
+    private void camerazoom() //æ‘„åƒæœºæ»šè½®ç¼©æ”¾
     {
         if (isBigScreen)
         {

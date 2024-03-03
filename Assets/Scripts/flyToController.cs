@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class flyToController : MonoBehaviour
 {
+    public bool canRotate=true; 
+    
     public List<CesiumSubScene> SubScenes = new List<CesiumSubScene>();
 
     public List<Vector2> subSceneYawAndPitch = new List<Vector2>();
@@ -49,16 +51,19 @@ public class flyToController : MonoBehaviour
     
     public void FlyTo_Click()
     {
+        canRotate = false;
         fly = 0;
     }
 
-    public void FlySceondScene_Click()
+    public void FlySecondScene_Click()
     {
+        canRotate = false;
         fly = 1;
     }
 
     public void FlyCameraScene_Click()
     {
+        canRotate = false;
         fly = 2;
     }
 }
