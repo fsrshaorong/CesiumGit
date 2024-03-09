@@ -15,19 +15,19 @@ using UnityEngine.Events;
 
 struct DataTableProperties
 {
-    public uint count;  //Êı¾İËùÔÚµÄ±íµÄĞĞÊı
-    public float cycle; //¿ÉÒÔÓĞ²»Í¬ÖÜÆÚ(s)
+    public uint count;  //æ•°æ®æ‰€åœ¨çš„è¡¨çš„è¡Œæ•°
+    public float cycle; //å¯ä»¥æœ‰ä¸åŒå‘¨æœŸ(s)
 }
 
 class DataTableDynamicProperties
 {
     public float lastUpdateTime;
 
-    public int currentCache;    //Ä¿Ç°ÕıÔÚÊ¹ÓÃµÄ»º´æ±àºÅ
-    public int currentRow;  //Ä¿Ç°Ê¹ÓÃµÄÊı¾İĞĞºÅ
+    public int currentCache;    //ç›®å‰æ­£åœ¨ä½¿ç”¨çš„ç¼“å­˜ç¼–å·
+    public int currentRow;  //ç›®å‰ä½¿ç”¨çš„æ•°æ®è¡Œå·
 
-    public int loadingCache;    //×îºó»º´æµÄ»º´æ±àºÅ
-    public int loadingRow;  //×îºó»º´æÊ±µÄĞĞºÅ
+    public int loadingCache;    //æœ€åç¼“å­˜çš„ç¼“å­˜ç¼–å·
+    public int loadingRow;  //æœ€åç¼“å­˜æ—¶çš„è¡Œå·
 }
 
 public class DataDeliveryEvent
@@ -61,25 +61,25 @@ public class DataSource
 public class DataSupplier : MonoBehaviour
 {
     /// <summary>
-    /// ¼ÓÈëÅäÖÃÎÄ¼şºó£¬ÓÉÓÚÔ­À´µÄÒ»ÌõÊı¾İÔÚ²»Í¬µÄÊı¾İÔ´ÏÂ¿ÉÄÜ¶ÔÓ¦²»Í¬µÄ±íºÍÁĞ£¬ÏÖÔÚÍ¨¹ıÊı¾İÏîÃûÀ´Ö¸¶¨Êı¾İ
-    /// Êı¾İÏîÃûÓë£¨±í£¬ÁĞ£©µÄ¹ØÏµ±£´æÔÚÅäÖÃÎÄ¼şÖĞ
-    /// ÇĞ»»Êı¾İÔ´Ê±Òª¸ù¾İ¼àÌıµÄÊı¾İÏîÃû±£ÁôÔ­À´µÄÊÂ¼şºÍ¼àÌı
-    /// Õâ¸ö×ÖµäÖĞÒ»¿ªÊ¼¾ÍÓĞSupportedData.jsonÖĞµÄÏî
+    /// åŠ å…¥é…ç½®æ–‡ä»¶åï¼Œç”±äºåŸæ¥çš„ä¸€æ¡æ•°æ®åœ¨ä¸åŒçš„æ•°æ®æºä¸‹å¯èƒ½å¯¹åº”ä¸åŒçš„è¡¨å’Œåˆ—ï¼Œç°åœ¨é€šè¿‡æ•°æ®é¡¹åæ¥æŒ‡å®šæ•°æ®
+    /// æ•°æ®é¡¹åä¸ï¼ˆè¡¨ï¼Œåˆ—ï¼‰çš„å…³ç³»ä¿å­˜åœ¨é…ç½®æ–‡ä»¶ä¸­
+    /// åˆ‡æ¢æ•°æ®æºæ—¶è¦æ ¹æ®ç›‘å¬çš„æ•°æ®é¡¹åä¿ç•™åŸæ¥çš„äº‹ä»¶å’Œç›‘å¬
+    /// è¿™ä¸ªå­—å…¸ä¸­ä¸€å¼€å§‹å°±æœ‰SupportedData.jsonä¸­çš„é¡¹
     /// </summary>
     Dictionary<string, UnityEvent<DataDeliveryEvent>> databaseEventJsonRef;
 
     /// <summary>
-    /// ¼ÇÂ¼Êı¾İÏî¶ÔÓ¦µÄ±íºÍÁĞ
+    /// è®°å½•æ•°æ®é¡¹å¯¹åº”çš„è¡¨å’Œåˆ—
     /// </summary>
     Dictionary<string, Tuple<string, string>> dataMappings;
 
     /// <summary>
-    /// dataMappingsµÄÄæÓ³Éä£¬ÓÉ±íºÍÁĞ»ñµÃÊı¾İÏîÃû³Æ£¬Ò»¸ö±íÁĞ¿ÉÄÜ±»¶à¸öÊı¾İÏî¶ÔÓ¦
+    /// dataMappingsçš„é€†æ˜ å°„ï¼Œç”±è¡¨å’Œåˆ—è·å¾—æ•°æ®é¡¹åç§°ï¼Œä¸€ä¸ªè¡¨åˆ—å¯èƒ½è¢«å¤šä¸ªæ•°æ®é¡¹å¯¹åº”
     /// </summary>
     Dictionary<Tuple<string, string>, List<string>> inverseDataMapping;
 
     /// <summary>
-    /// ×ÖµäÖĞ±£´æÁË¸÷¸ö±íÒÔ¼°¶ÔÓ¦Êı¾İÏî·¢Éú±ä»¯µÄÊÂ¼ş£¬Í¬Ò»¸ö±íºÍÁĞ¿ÉÄÜ¶ÔÓ¦¶à¸öÊı¾İÏî£¬Òò´Ë×îºóµÃµ½µÄÖµÊÇList
+    /// å­—å…¸ä¸­ä¿å­˜äº†å„ä¸ªè¡¨ä»¥åŠå¯¹åº”æ•°æ®é¡¹å‘ç”Ÿå˜åŒ–çš„äº‹ä»¶ï¼ŒåŒä¸€ä¸ªè¡¨å’Œåˆ—å¯èƒ½å¯¹åº”å¤šä¸ªæ•°æ®é¡¹ï¼Œå› æ­¤æœ€åå¾—åˆ°çš„å€¼æ˜¯List
     /// </summary>
     Dictionary<string, Dictionary<string, List<UnityEvent<DataDeliveryEvent>>>> databaseEvent;
 
@@ -90,7 +90,7 @@ public class DataSupplier : MonoBehaviour
 
     const int cacheCount = 2;
     const int cacheSize = 5;
-    const float cycle = 1;  //Ãë
+    const float cycle = 1;  //ç§’
     string timestampCol;
     float speedupFac = 1;
     enum MessageType
@@ -103,15 +103,15 @@ public class DataSupplier : MonoBehaviour
 
     Dictionary<string, List<string>> listeningDatas;
 
-    //±íÃû -> ĞĞÊı£¬ÖÜÆÚ
+    //è¡¨å -> è¡Œæ•°ï¼Œå‘¨æœŸ
     Dictionary<string, DataTableProperties> dataTableProps;
 
     Dictionary<string, DataTableDynamicProperties> tableDynamic;
 
     Dictionary<string, List<bool>> cacheLoadStates;
 
-    CancellationTokenSource databaseSwitchCancellation; //ËùÓĞÔÚÊı¾İ¿â·¢ÉúÇĞ»»Ê±ĞèÒª½áÊøµÄÈÎÎñ»áÄÃµ½µÄtoken
-    //string databaseName;    //ÇĞ»»Êı¾İ¿âÊ±Èç¹û»¹ÓĞÎ´Íê³ÉµÄÇëÇó£¬ÓÃÊı¾İ¿âÃûÀ´ÅĞ¶ÏµÃµ½µÄÊı¾İÊÇ·ñ¹ıÊ±
+    CancellationTokenSource databaseSwitchCancellation; //æ‰€æœ‰åœ¨æ•°æ®åº“å‘ç”Ÿåˆ‡æ¢æ—¶éœ€è¦ç»“æŸçš„ä»»åŠ¡ä¼šæ‹¿åˆ°çš„token
+    //string databaseName;    //åˆ‡æ¢æ•°æ®åº“æ—¶å¦‚æœè¿˜æœ‰æœªå®Œæˆçš„è¯·æ±‚ï¼Œç”¨æ•°æ®åº“åæ¥åˆ¤æ–­å¾—åˆ°çš„æ•°æ®æ˜¯å¦è¿‡æ—¶
 
     DropdownEvents dropdown;
 
@@ -129,7 +129,7 @@ public class DataSupplier : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        //»ñÈ¡ËùÓĞ¿ÉÅäÖÃµÄÊı¾İÏî
+        //è·å–æ‰€æœ‰å¯é…ç½®çš„æ•°æ®é¡¹
         databaseEventJsonRef = new Dictionary<string, UnityEvent<DataDeliveryEvent>>();
         /*string supportedDataFileFullPath = Path.Combine(Application.dataPath, supportedDataFilePath);
         string spdjson = File.ReadAllText(supportedDataFileFullPath);*/
@@ -152,7 +152,7 @@ public class DataSupplier : MonoBehaviour
     {
         if (tableDynamic == null || dataCaches == null)
         {
-            //BroadcastMsg("µÈ´ıÊı¾İ¿âÁ¬½Ó");
+            //BroadcastMsg("ç­‰å¾…æ•°æ®åº“è¿æ¥");
             return;
         }
         for (int i = 0; i < tableDynamic.Count; i++)
@@ -170,7 +170,7 @@ public class DataSupplier : MonoBehaviour
                     
                     if (Math.Floor((tableDynamic[tableName].currentRow / cacheSize).ConvertTo<double>()) % cacheCount != tableDynamic[tableName].currentCache)
                     {
-                        //ÔÚÊı¾İÌîÂúµÄÇé¿öÏÂÒÑ¾­Ê¹ÓÃÍêÏÖÔÚÕâ¿écache
+                        //åœ¨æ•°æ®å¡«æ»¡çš„æƒ…å†µä¸‹å·²ç»ä½¿ç”¨å®Œç°åœ¨è¿™å—cache
                         cacheLoadStates[tableName][tableDynamic[tableName].currentCache] = false;
                         if (cacheLoadStates[tableName][(tableDynamic[tableName].currentCache + cacheCount - 1) % cacheCount])
                         {
@@ -180,13 +180,13 @@ public class DataSupplier : MonoBehaviour
                     }
                     else
                     {
-                        //Ã»ÓĞ³¬¹ıÉè¶¨µÄCacheSizeµÄÇé¿ö
-                        //µ±Ç°Cache»¹Ã»Ê¹ÓÃÍê
+                        //æ²¡æœ‰è¶…è¿‡è®¾å®šçš„CacheSizeçš„æƒ…å†µ
+                        //å½“å‰Cacheè¿˜æ²¡ä½¿ç”¨å®Œ
                         if (tableDynamic[tableName].currentRow % cacheSize < currentCacheSize)
                         {
                             //databaseEvent[tableName][dataName].Invoke(dataCaches[currentCache][tableName][dataName][currentRow % cacheSize]);
                         }
-                        //Êµ¼ÊµÄcacheÌî²»ÂúÉè¶¨µÄcacheSizeµÄÇé¿öÏÂ,ÒÑ¾­µ½ËùÓĞÊı¾İµÄ½áÎ²ÁË
+                        //å®é™…çš„cacheå¡«ä¸æ»¡è®¾å®šçš„cacheSizeçš„æƒ…å†µä¸‹,å·²ç»åˆ°æ‰€æœ‰æ•°æ®çš„ç»“å°¾äº†
                         else
                         {
                             cacheLoadStates[tableName][tableDynamic[tableName].currentCache] = false;
@@ -217,7 +217,7 @@ public class DataSupplier : MonoBehaviour
                     }
                     else
                     {
-                        invokeMesg = "µÈ´ıÊı¾İ´«Êä";
+                        invokeMesg = "ç­‰å¾…æ•°æ®ä¼ è¾“";
                         invokeMesgType = MessageType.Loading;
                     }
                     
@@ -235,7 +235,7 @@ public class DataSupplier : MonoBehaviour
                         }
                         catch(Exception e)
                         {
-                            print("¼àÌıº¯Êı±¨´í£º" + e.ToString());
+                            print("ç›‘å¬å‡½æ•°æŠ¥é”™ï¼š" + e.ToString());
                             //throw e;
                         }
                     }
@@ -243,7 +243,7 @@ public class DataSupplier : MonoBehaviour
 
                 if(cacheLoadStates[tableName][tableDynamic[tableName].currentCache])
                 {
-                    //¼ÓÔØÍê³ÉºóÃ¿´Î¾­¹ıcycleÊ±¼äcurrentRow¾Í»á+1£¬¼ÇÂ¼µ±Ç°Ê¹ÓÃµ½»º´æµÄµÚ¼¸ĞĞ
+                    //åŠ è½½å®Œæˆåæ¯æ¬¡ç»è¿‡cycleæ—¶é—´currentRowå°±ä¼š+1ï¼Œè®°å½•å½“å‰ä½¿ç”¨åˆ°ç¼“å­˜çš„ç¬¬å‡ è¡Œ
                     tableDynamic[tableName].currentRow++;
                 }
             }
@@ -259,9 +259,9 @@ public class DataSupplier : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="dataName">Êı¾İÏîÃû£¬Èç¡°Â¯ÎÂ¡±µÈ</param>
-    /// <param name="tableName">Êı¾İ¿âÖĞµÄ±íÃû</param>
-    /// <param name="columnName">Êı¾İ¿â±íµÄÁĞÃû</param>
+    /// <param name="dataName">æ•°æ®é¡¹åï¼Œå¦‚â€œç‚‰æ¸©â€ç­‰</param>
+    /// <param name="tableName">æ•°æ®åº“ä¸­çš„è¡¨å</param>
+    /// <param name="columnName">æ•°æ®åº“è¡¨çš„åˆ—å</param>
     public void SetListeningData(string dataName, string tableName, string columnName)
     {
         if(listeningDatas.ContainsKey(tableName))
@@ -273,7 +273,7 @@ public class DataSupplier : MonoBehaviour
         }
         else
         {
-            //¼àÌıµÄÊı¾İÏîÖĞ»¹Ã»ÓĞÕâ¸ö±íµÄĞÅÏ¢
+            //ç›‘å¬çš„æ•°æ®é¡¹ä¸­è¿˜æ²¡æœ‰è¿™ä¸ªè¡¨çš„ä¿¡æ¯
             listeningDatas[tableName] = new List<string>();
             if(timestampCol != "")
             {
@@ -314,10 +314,10 @@ public class DataSupplier : MonoBehaviour
     {
         databaseEventJsonRef[dataName].AddListener(call);
 
-        //ËùÓĞµÄÔÚÓ³ÉäÅäÖÃÖĞµÄÊı¾İÏîÒÑ¾­±»°ó¶¨µ½ÏàÓ¦µÄÊÂ¼şÉÏÁË£¬²»´æÔÚÃ»ÓĞÔÚ¼àÌıµÄ±íÁĞ
-        //if(dataMappings != null)    //Èç¹ûdataMappingsµÈÓÚnullËµÃ÷»¹Ã»ÇĞ»»Êı¾İÔ´£¬Ö»ĞèÒª¼òµ¥µÇ¼ÇÒ»ÏÂ
+        //æ‰€æœ‰çš„åœ¨æ˜ å°„é…ç½®ä¸­çš„æ•°æ®é¡¹å·²ç»è¢«ç»‘å®šåˆ°ç›¸åº”çš„äº‹ä»¶ä¸Šäº†ï¼Œä¸å­˜åœ¨æ²¡æœ‰åœ¨ç›‘å¬çš„è¡¨åˆ—
+        //if(dataMappings != null)    //å¦‚æœdataMappingsç­‰äºnullè¯´æ˜è¿˜æ²¡åˆ‡æ¢æ•°æ®æºï¼Œåªéœ€è¦ç®€å•ç™»è®°ä¸€ä¸‹
         //{
-        //    //ÔËĞĞÖĞÌí¼Ó¼àÌı
+        //    //è¿è¡Œä¸­æ·»åŠ ç›‘å¬
         //    string tableName = dataMappings[dataName].Item1;
         //    string columnName = dataMappings[dataName].Item2;
         //    SetListeningData(dataName, tableName, columnName);
@@ -325,7 +325,7 @@ public class DataSupplier : MonoBehaviour
     }
 
     /// <summary>
-    /// »ñÈ¡Êı¾İÔ´¶ÔÓ¦µÄÅäÖÃÎÄ¼şÖĞµÄ¶ÔÓ¦UIÊı¾İ
+    /// è·å–æ•°æ®æºå¯¹åº”çš„é…ç½®æ–‡ä»¶ä¸­çš„å¯¹åº”UIæ•°æ®
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
@@ -338,7 +338,7 @@ public class DataSupplier : MonoBehaviour
     {
         currentDataSource = dataSource;
 
-        databaseSwitchCancellation.Cancel();    //ÏÈÍ£Ö¹ÕıÔÚ½øĞĞµÄÇëÇó
+        databaseSwitchCancellation.Cancel();    //å…ˆåœæ­¢æ­£åœ¨è¿›è¡Œçš„è¯·æ±‚
         databaseSwitchCancellation.Dispose();
         databaseSwitchCancellation = new CancellationTokenSource();
 
@@ -346,7 +346,7 @@ public class DataSupplier : MonoBehaviour
         databaseEvent = new Dictionary<string, Dictionary<string, List<UnityEvent<DataDeliveryEvent>>>>();
         listeningDatas = new Dictionary<string, List<string>>();
 
-        tableDynamic = new Dictionary<string, DataTableDynamicProperties>();    //¶¯Ì¬Êı¾İ£¬»áÔÚSwitchToDatabaseÖĞÖØÖÃ
+        tableDynamic = new Dictionary<string, DataTableDynamicProperties>();    //åŠ¨æ€æ•°æ®ï¼Œä¼šåœ¨SwitchToDatabaseä¸­é‡ç½®
         cacheLoadStates = new Dictionary<string, List<bool>>();
 
         allFileLines = new List<string>();
@@ -370,12 +370,12 @@ public class DataSupplier : MonoBehaviour
         }
         else
         {
-            throw new Exception("ÎŞ·¨Ê¹ÓÃ¸ÃÊı¾İÔ´£º" + dataSource.name + ":" + dataSource.type);
+            throw new Exception("æ— æ³•ä½¿ç”¨è¯¥æ•°æ®æºï¼š" + dataSource.name + ":" + dataSource.type);
         }
 
         string dataSourceConfigFullFilePath = Path.GetDirectoryName(Path.Combine(Application.dataPath, dataSourceConfigFilePath));
 
-        //¶ÁÈëuiÅäÖÃÎÄ¼ş
+        //è¯»å…¥uié…ç½®æ–‡ä»¶
         if(dataSource.type == "generated")
         {
             uimapping = new UIMappingReader();
@@ -397,7 +397,7 @@ public class DataSupplier : MonoBehaviour
         }
         
 
-        //¶ÁÈ¡µ±Ç°Êı¾İ¿â¶ÔÓ¦ÅäÖÃÎÄ¼ş
+        //è¯»å–å½“å‰æ•°æ®åº“å¯¹åº”é…ç½®æ–‡ä»¶
         string mappingFileFullPath;
         string mappingJson = "";
         if (dataSource.type == "generated")
@@ -416,7 +416,7 @@ public class DataSupplier : MonoBehaviour
             //}
             //catch (Exception ex)
             //{
-            //    print("sqlÓï¾ä:" + sql + "->Òı·¢ÈçÏÂ±¨´í:");
+            //    print("sqlè¯­å¥:" + sql + "->å¼•å‘å¦‚ä¸‹æŠ¥é”™:");
             //    throw ex;
             //}
             
@@ -448,16 +448,16 @@ public class DataSupplier : MonoBehaviour
                 tableName = schema + "." + tableName; 
             }
             Tuple<string, string> tcTuple = new Tuple<string, string>(tableName, columnName);
-            dataMappings[mappingKey] = tcTuple; //Éú³ÉÊı¾İÃûµ½±íÁĞµÄÓ³Éä
+            dataMappings[mappingKey] = tcTuple; //ç”Ÿæˆæ•°æ®ååˆ°è¡¨åˆ—çš„æ˜ å°„
 
-            //Éú³É·´Ó³Éä
+            //ç”Ÿæˆåæ˜ å°„
             if(!inverseDataMapping.ContainsKey(tcTuple))
             {
                 inverseDataMapping[tcTuple] = new List<string>();
             }
             inverseDataMapping[tcTuple].Add(mappingKey);
 
-            //Ö»ÓĞ±»¼àÌıÊ±²Å¼ÌĞø //ËÆºõÃ»Ê²Ã´±ØÒª£¬databaseEventJsonRefÒ»¿ªÊ¼¾Í°üº¬ËùÓĞµÄSupportedData.jsonÖĞµÄÊı¾İÏîÃû
+            //åªæœ‰è¢«ç›‘å¬æ—¶æ‰ç»§ç»­ //ä¼¼ä¹æ²¡ä»€ä¹ˆå¿…è¦ï¼ŒdatabaseEventJsonRefä¸€å¼€å§‹å°±åŒ…å«æ‰€æœ‰çš„SupportedData.jsonä¸­çš„æ•°æ®é¡¹å
             //if (!databaseEventJsonRef.ContainsKey(mappingKey))
             //{
             //    continue;
@@ -528,7 +528,7 @@ public class DataSupplier : MonoBehaviour
     }
 
     /// <summary>
-    /// Ö»ÔÚ³õÊ¼»¯ÖĞÓÃµ½
+    /// åªåœ¨åˆå§‹åŒ–ä¸­ç”¨åˆ°
     /// </summary>
     /// <param name="tableName"></param>
     /// <returns></returns>
@@ -557,7 +557,7 @@ public class DataSupplier : MonoBehaviour
         tableDynamic[tableName].lastUpdateTime = dataTableProps[tableName].cycle;
     }
     /// <summary>
-    /// Ö»ÔÚ³õÊ¼»¯ÖĞÓÃµ½
+    /// åªåœ¨åˆå§‹åŒ–ä¸­ç”¨åˆ°
     /// </summary>
     /// <param name="cacheIndex"></param>
     /// <param name="tableName"></param>
@@ -583,7 +583,7 @@ public class DataSupplier : MonoBehaviour
         bool isEmpty = true;
         while(isEmpty)
         {
-            //await UniTask.Delay(10000);   //²âÊÔÇëÇóÊ±¼äºÜ³¤
+            //await UniTask.Delay(10000);   //æµ‹è¯•è¯·æ±‚æ—¶é—´å¾ˆé•¿
             await WriteDataToCache(dataCaches[cacheIndex], tableName, tableDynamic[tableName].loadingRow);
             if (dataCaches[cacheIndex][tableName].ElementAt(0).Value.Count > 0 )
             {

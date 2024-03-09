@@ -25,7 +25,7 @@ public class PathParticle : MonoBehaviour
             ParticleUtils.MakeCurve(frames, distance, lifeTime, out curve_X, out curve_Y, out curve_Z);
             var vel = Particle.velocityOverLifetime;
             vel.enabled = true;
-            vel.space = ParticleSystemSimulationSpace.Local;
+            vel.space = ParticleSystemSimulationSpace.World;
             vel.x = new ParticleSystem.MinMaxCurve(lifeTime, curve_X);
             vel.y = new ParticleSystem.MinMaxCurve(lifeTime, curve_Y);
             vel.z = new ParticleSystem.MinMaxCurve(lifeTime, curve_Z);

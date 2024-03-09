@@ -36,12 +36,14 @@ public class SandMaterialContrl : MonoBehaviour
 
     void Push()
     {
-        pursher.DOMoveX(-20f, feedDuration);
+        //pursher.DOMoveX(-20f, feedDuration);
+        pursher.DOLocalMoveX(-15, feedDuration);
     }
 
     void WithdrawPusher()
     {
-        pursher.DOMoveX(-5f, feedInterval);
+        //pursher.DOMoveX(-5f, feedInterval);
+        pursher.DOLocalMoveX(0, feedDuration);
     }
 
     private void OnDisable()

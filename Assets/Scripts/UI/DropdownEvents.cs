@@ -3,20 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using TMPro;
+using UnityEngine.Events;
+using System;
+using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
+//using UnityEditor.UI;
 
 public class DropdownEvents : MonoBehaviour, IPointerEnterHandler
 {
     public TMP_Dropdown dropdown;
-    public string selectedData;
 
+    [NonSerialized]
+    public DataSource selectedData = new DataSource() { type = "null" };
+
+    //List<string> filesList;
     List<string> filesList = new List<string>();
     TMP_Dropdown.OptionData tempData;
+
+    DataSourceJsonData localDataSources;
+    string dataSourceConfig = "../../json/DataSource.json";
+
+    List<DataSource> dataSources;
+
+    RemoteDataSourceLoader remoteDSLoader;
+
+    public UnityEvent<DataSource> onChangeSelectedData;
 
     // Start is called before the first frame update
     void Start()
     {
-        FindFiles();
-        InitDropdown();
+        remoteDSLoader = new RemoteDataSourceLoader();
+
+        //FindFiles();
+        //localDataSources = new DataSourceJsonData();
+        //localDataSources.postgresql = new List<DataSource>();
+        GetDataSources(dataSourceConfig);
+        //Debug.Log("异步");
+        //InitDropdown();
         dropdown.onValueChanged.AddListener(Change);
     }
 
@@ -28,9 +52,12 @@ public class DropdownEvents : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        filesList.Clear();
-        FindFiles();
-        InitDropdown();
+        //filesList.Clear();
+        //FindFiles();
+        //Debug.Log("读数据开始");
+        GetDataSources(dataSourceConfig);
+        //Debug.Log("异步");
+        //InitDropdown();
     }
 
 
@@ -43,15 +70,34 @@ public class DropdownEvents : MonoBehaviour, IPointerEnterHandler
 
     void Change(int indexOption)
     {
-        FindFiles();
-        InitDropdown();
-        for (int i = 0; i < filesList.Count + 1; i++)
+        //FindFiles();
+        //GetDataSources(dataSourceConfig);
+        if(indexOption == 0)
         {
-            if (i == indexOption - 1)
+            selectedData = new DataSource()
             {
-                selectedData = filesList[i];
-                //print(selectedData);
+                name = "",
+                type = "null"
+            };
+            onChangeSelectedData.Invoke(selectedData);
+        }
+        else
+        {
+            //selectedData = dropdown.options[indexOption].text;
+            if(indexOption > filesList.Count)
+            {
+                selectedData = dataSources[indexOption - filesList.Count - 1];
             }
+            else
+            {
+                selectedData = new DataSource()
+                {
+                    name = filesList[indexOption - 1],
+                    type = "file"
+                };
+            }
+           
+            onChangeSelectedData.Invoke(selectedData);
         }
     }
 
@@ -71,11 +117,18 @@ public class DropdownEvents : MonoBehaviour, IPointerEnterHandler
             tempData.text = file.Replace(".txt", "");
             dropdown.options.Add(tempData);
         }
-    }
 
+        foreach(var dataSource in dataSources)
+        {
+            tempData = new TMP_Dropdown.OptionData();
+            tempData.text = dataSource.name;
+            dropdown.options.Add(tempData);
+        }
+    }
 
     public void FindFiles()
     {
+        return;
         //string dataPath = Application.dataPath + "../BackEnd";  //路径
         string dataPath = Path.Combine(Application.dataPath, "../../BackEnd");
         //print(dataPath);
@@ -106,4 +159,46 @@ public class DropdownEvents : MonoBehaviour, IPointerEnterHandler
             }
         }
     }
+
+    /// <summary>
+    /// 从DataSource.json中读取数据源
+    /// </summary>
+    /// <summary>
+    /// 从DataSource.json中读取数据源
+    /// </summary>
+    async UniTask GetDataSources(string filePath)
+    {
+        var localDSReadingTask = ReadDataSourceConfigFile(filePath);
+        var remoteDSReadingTask = remoteDSLoader.GetDataSourceListByClientTypeAsync("unity");
+
+        dataSources = new List<DataSource>();
+
+        await localDSReadingTask;
+        try
+        {
+            dataSources.AddRange(localDataSources.postgresql);
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
+
+        dataSources.AddRange(await remoteDSReadingTask);
+
+        InitDropdown();
+    }
+
+    async UniTask ReadDataSourceConfigFile(string filePath)
+    {
+        string DataSourceJson = Path.Combine(Application.dataPath, filePath);
+        string strs = await File.ReadAllTextAsync(DataSourceJson);
+
+        localDataSources = JsonUtility.FromJson<DataSourceJsonData>(strs);
+    }
+}
+
+[Serializable]
+class DataSourceJsonData
+{
+    public List<DataSource> postgresql;
 }

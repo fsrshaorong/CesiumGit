@@ -11,6 +11,7 @@ public class LoadBuildingAndFactory : MonoBehaviour
     }
     public void  LoadFactory_Click()
     {
+        Debug.Log(1);
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
     }
 }

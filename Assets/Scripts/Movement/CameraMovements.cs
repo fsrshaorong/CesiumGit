@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class CameraMovements : MonoBehaviour, IMouseBaseEvent
 {
@@ -27,19 +28,22 @@ public class CameraMovements : MonoBehaviour, IMouseBaseEvent
 
     private bool mouseDown = false;
 
+    private ScreenSwitch screenSwitch;
+
     void Start()
     {
         center = transform.GetComponent<BoxCollider>().center;
         minDisBig = (posBig - center).magnitude;
         //print(minDisBig);
         minDisNorm = (posNorm - center).magnitude;
+        screenSwitch = FindObjectOfType<ScreenSwitch>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //isBigScreen = FindObjectOfType<ScreenSwitch>().withCharts;
-        isBigScreen = true;
+        isBigScreen = screenSwitch.withCharts;
         //camerarotate();
         //camerazoom();
         if (Input.GetKeyDown(KeyCode.R))
@@ -56,19 +60,19 @@ public class CameraMovements : MonoBehaviour, IMouseBaseEvent
             }
         }
         disRealtime = (Camera.position - center).magnitude;
+        camerazoom();
     }
 
-    public void OnMouseOver()
+    public void OnMouseOver(PointerEventData eventData)
     {
         //cameratranslate();
-        camerazoom();
         //if(mouseDown)
         //{
         //    camerarotate();
         //}
     }
 
-    public void OnMouseDrag()
+    public void OnMouseDrag(PointerEventData eventData)
     {
         //camerarotate();
     }
@@ -127,27 +131,27 @@ public class CameraMovements : MonoBehaviour, IMouseBaseEvent
         }
     }
 
-    public void OnMouseEnter()
+    public void OnMouseEnter(PointerEventData eventData)
     {
         
     }
 
-    public void OnMouseExit()
+    public void OnMouseExit(PointerEventData eventData)
     {
         mouseDown = false;
     }
 
-    public void OnMouseDown()
+    public void OnMouseDown(PointerEventData eventData)
     {
         mouseDown = true;
     }
 
-    public void OnMouseUp()
+    public void OnMouseUp(PointerEventData eventData)
     {
         mouseDown = false;
     }
 
-    public void OnDrag()
+    public void OnDrag(PointerEventData eventData)
     {
         camerarotate();
     }

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IUILayoutSerializable
+public interface IUILayoutSerializable
 {
     string GetPrefabKey();
-    string GetDetailLeftPrefabKey();
-    string GetDetailRightPrefabKey();
+    string GetDetailPrefabKey();
+    string GetThumbnailPrefabKey();
     string GetName();
     Rect GetLayoutRect();
 }

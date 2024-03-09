@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SerializePanelEventPanel01 : MonoBehaviour, IUILayoutSerializable, IAdditionalDataProcessor
 {
-    public string GetDetailLeftPrefabKey()
+    public string GetDetailPrefabKey()
     {
         return "UI/EventPanels/EventPanel01/EventPanel01Detail";
     }
 
-    public string GetDetailRightPrefabKey()
+    public string GetThumbnailPrefabKey()
     {
-        return "UI/EventPanels/EventPanel01/EventPanel01Detail";
+        return "UI/EventPanels/EventPanel01/EventPanel01DetailThumbnail";
     }
 
     public Rect GetLayoutRect()
@@ -42,7 +43,7 @@ public class SerializePanelEventPanel01 : MonoBehaviour, IUILayoutSerializable, 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame

@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.cesium.unity": "file:D:/山海经/Cesuim/com.cesium.unity-1.7/package",
+    "com.cesium.unity": "file:D:/山海经/Cesuim/com.cesium.unity-1.6/package",
     "com.unity.collab-proxy": "2.0.4",
     "com.unity.ide.rider": "3.0.21",
     "com.unity.ide.visualstudio": "2.0.18",
@@ -41,14 +41,5 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  },
-  "scopedRegistries": [
-    {
-      "name": "Cesium",
-      "url": "https://unity.pkg.cesium.com",
-      "scopes": [
-        "com.cesium.unity"
-      ]
-    }
-  ]
+  }
 }

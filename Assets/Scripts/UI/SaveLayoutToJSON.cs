@@ -36,8 +36,8 @@ public class SaveLayoutToJSON : MonoBehaviour
             panelJson.height = tmpRect.height;
             panelJson.name = panel.GetName();
             panelJson.prefab = panel.GetPrefabKey();
-            panelJson.detailLeftPrefab = panel.GetDetailLeftPrefabKey();
-            panelJson.detailRightPrefab = panel.GetDetailRightPrefabKey();
+            panelJson.detailPrefab = panel.GetDetailPrefabKey();
+            panelJson.thumbnailPrefab = panel.GetThumbnailPrefabKey();
             Dictionary<string, string> rawData = new Dictionary<string, string>();
             rawData["extra"] = "testExtra";
             panelJson.data = new Serialization<string, string>(rawData);
@@ -65,18 +65,20 @@ public class SaveLayoutToJSON : MonoBehaviour
             AbstractEventPanel eventPanel = panelObj.GetComponent<AbstractEventPanel>();
             RectTransform rectTransform = panelObj.GetComponent<RectTransform>();
             rectTransform.parent = transform;
-            rectTransform.localPosition = new Vector2(panel.posx + 100, panel.posy);
+            rectTransform.localPosition = new Vector2(panel.posx, panel.posy);
             rectTransform.sizeDelta = new Vector2(panel.width, panel.height);
             rectTransform.localScale = new Vector2(1.0f, 1.0f);
             IAdditionalDataProcessor additionalDataProcessor = panelObj.GetComponent<IAdditionalDataProcessor>();
             additionalDataProcessor.ProcessAdditionalData(panel.data.ToDictionary());
 
-            GameObject detailLeftScreen = Instantiate((GameObject)Resources.Load(panel.detailLeftPrefab), leftScreen.transform);
-            RectTransform detailLeftScreenTransform = detailLeftScreen.GetComponent<RectTransform>();
-            //detailLeftScreenTransform.parent = leftScreen.transform;
+            GameObject detailLeftScreen = Instantiate((GameObject)Resources.Load(panel.detailPrefab), leftScreen.transform);
             detailLeftScreen.SetActive(false);
 
+            GameObject detailRightScreen = Instantiate((GameObject)Resources.Load(panel.detailPrefab), rightScreen.transform);
+            detailRightScreen.SetActive(false);
+
             eventPanel.detailLeftScreen = detailLeftScreen;
+            eventPanel.detailRightScreen = detailRightScreen;
         }
     }
 
@@ -103,7 +105,7 @@ public class PanelJsonData
     public float height;
     public string name;
     public string prefab;
-    public string detailLeftPrefab;
-    public string detailRightPrefab;
+    public string detailPrefab;
+    public string thumbnailPrefab;
     public Serialization<string, string> data;
 }

@@ -7,16 +7,19 @@ using DG.Tweening;
 public class EscMenu : MonoBehaviour
 {
     bool isOn = false;
+    Transform thumbnails;
+
     // Start is called before the first frame update
     void Start()
     {
-        transform.localScale = new Vector3(0.8f, 0, 0.8f); 
+        transform.localScale = new Vector3(0.8f, 0, 0.8f);
+        thumbnails = GameObject.FindGameObjectWithTag("Thumbnails").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && thumbnails.childCount == 0)
         {
             if (isOn)
             {
@@ -34,9 +37,9 @@ public class EscMenu : MonoBehaviour
     public void ClickOut()
     {
         #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;//±à¼­×´Ì¬ÏÂÍË³ö
+        UnityEditor.EditorApplication.isPlaying = false;//ï¿½à¼­×´Ì¬ï¿½ï¿½ï¿½Ë³ï¿½
         #else
-        Application.Quit();//´ò°ü±àÒëºóÍË³ö
+        Application.Quit();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½
         #endif
     }
 

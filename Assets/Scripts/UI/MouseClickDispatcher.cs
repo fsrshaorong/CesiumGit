@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MouseClickDispatcher : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class MouseClickDispatcher : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler, IPointerExitHandler
 {
     public LiveCameraController[] cameras;
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class MouseClickDispatcher : MonoBehaviour, IPointerDownHandler, IPointer
     {
         foreach (var camera in cameras)
         {
-            camera.MouseDown();
+            camera.MouseDown(eventData);
         }
     }
 
@@ -30,9 +30,24 @@ public class MouseClickDispatcher : MonoBehaviour, IPointerDownHandler, IPointer
     {
         foreach (var camera in cameras)
         {
-            camera.MouseUp();
+            camera.MouseUp(eventData);
         }
     }
 
-    
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        //print("mouseOver");
+        foreach (var camera in cameras)
+        {
+            camera.CheckPointerRay(eventData);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        foreach (var camera in cameras)
+        {
+            camera.MouseExit(eventData);
+        }
+    }
 }

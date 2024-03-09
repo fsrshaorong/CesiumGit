@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs_Sand Dunes
+  m_Shader: {fileID: -6465566751694194690, guid: ab2325454a2d4554a85f6eb47bb93ce9,
+    type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _DistortAmplitude: 0.17
+    - _DistortNoisePeriod: 4.56
+    - _GrainColorBlend: 0.572
+    - _GrainPeriod: 500
+    - _GrainShineStrength: 1
+    - _NormalStrength: 200
+    - _PolygonSides: 3.01
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ShineDuneHeightMin: 0.5
+    - _ShineThreshold: 0.9
+    - _SineAmplitude: -0.41
+    - _SineFrequency: 1.44
+    - _SineRotation: 0
+    - _Smoothness: 0
+    - _SubstrateDuneHeightMax: 0.5
+    - _SubstrateGrainHeightMax: 0.25
+    - _SubstrateTightening: 5
+    - _UVScale: 1
+    m_Colors:
+    - _SandHighColor: {r: 1, g: 0.754902, b: 0.41176474, a: 1}
+    - _SandLowColor: {r: 0.7294118, g: 0.43660134, b: 0.22745098, a: 1}
+    - _ShineColor: {r: 1, g: 0.5148711, b: 0.23270434, a: 0}
+    - _SubstrateColor: {r: 0, g: 0, b: 0, a: 1}
+    - _UVOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _UVTiling: {r: 2, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &1710550788681017002
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

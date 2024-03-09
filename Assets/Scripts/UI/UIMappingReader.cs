@@ -10,11 +10,8 @@ public class UIMappingReader
 
     public void ReadMapping(string filePath)
     {
-        /*string uimapping = File.ReadAllText(filePath);
-        */
-        TextAsset textAsset = Resources.Load<TextAsset>(filePath);
-        string uimapping = textAsset.text;
-        uiCustom = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(uimapping);
+        string uimapping = File.ReadAllText(filePath);
+        ResolveMapping(uimapping);
     }
 
     public void ResolveMapping(string json)
