@@ -77,8 +77,8 @@ public class SaveLayoutToJSON : MonoBehaviour
             GameObject detailRightScreen = Instantiate((GameObject)Resources.Load(panel.detailPrefab), rightScreen.transform);
             detailRightScreen.SetActive(false);
 
-            eventPanel.detailLeftScreen = detailLeftScreen;
-            eventPanel.detailRightScreen = detailRightScreen;
+            //eventPanel.detailLeftScreen = detailLeftScreen;
+            //eventPanel.detailRightScreen = detailRightScreen;
         }
     }
 

@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class test : MonoBehaviour
 {
+   public CameraMovements cameraMovements;
+
+   private bool isDragging;
+
    void Update()
    {
       // 在鼠标点击位置创建一条射线
@@ -18,9 +22,18 @@ public class test : MonoBehaviour
          {
             // 如果射线击中了物体，执行相应的事件
             Debug.Log("触发事件：" + hitInfo.collider.gameObject.name);
-            
-            SceneManager.LoadScene(2, LoadSceneMode.Single);
+
+            if (hitInfo.collider.gameObject.name == "Icon_location01_White")
+            {
+               SceneManager.LoadScene(2, LoadSceneMode.Single);
+            }
+
+            if (hitInfo.collider.gameObject.name == "厂房5")
+            {
+               isDragging = true;
+            }
          }
+
       }
    }
 }

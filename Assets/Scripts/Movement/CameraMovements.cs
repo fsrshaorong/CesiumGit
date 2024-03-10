@@ -91,7 +91,7 @@ public class CameraMovements : MonoBehaviour, IMouseBaseEvent
 
     }
 
-    private void camerarotate() //摄像机围绕目标旋转操作
+    public void camerarotate() //摄像机围绕目标旋转操作
     {
         //transform.RotateAround(target.position, Vector3.up, speed * Time.deltaTime); //摄像机围绕目标旋转
         var mouse_x = Input.GetAxis("Mouse X");//获取鼠标X轴移动
